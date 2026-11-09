@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="docs/assets/logo.svg" alt="SocioFit" width="96" height="96"/>
+<img src="docs/assets/logo.svg" alt="AccesoQR" width="96" height="96"/>
 
-# SocioFit
+# AccesoQR
 
-**Control de membresías para gimnasios y academias, con carnet QR, vencimientos y recordatorios por WhatsApp. Offline-first, sin costos mensuales.**
+**Check-in de eventos con QR sin conexión. Cliente móvil de SystemInscripciones: valida entradas en la puerta y sincroniza después.**
 
 <p>
 <img src="https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white" alt="Expo"/>
@@ -22,12 +22,12 @@
 
 ## 🚀 Características
 
-- **Socios y planes**: alta de socios con foto, plan mensual/trimestral/anual y precio libre.
-- **Carnet QR**: cada socio tiene un QR para registrar asistencia en la puerta.
-- **Vencimientos**: panel con socios por vencer, vencidos y al día.
-- **Recordatorios locales**: notificaciones en el dispositivo, sin servidor.
-- **Cobro por WhatsApp**: mensaje de pago pre-llenado con un toque.
-- **Caja diaria**: pagos del día y resumen mensual.
+- **Escaneo QR offline** de entradas en la puerta.
+- **Lista local** de asistentes descargada antes del evento.
+- **Detección de duplicados** y entradas inválidas.
+- **Contador en vivo** de ingresos.
+- **Sincronización** con [SystemInscripciones](https://github.com/Luiss2080/SystemInscripciones) al recuperar conexión.
+- **Exportación CSV** de asistencia.
 
 > Sin servidores, sin suscripciones y sin servicios de pago: todos los datos viven en el dispositivo (SQLite).
 
@@ -42,23 +42,22 @@
 
 ### Modelo de datos
 
-- `socios (id, nombre, telefono, foto, creado_en)`
-- `planes (id, nombre, dias, precio)`
-- `membresias (id, socio_id, plan_id, inicio, vence, pagado)`
-- `asistencias (id, socio_id, fecha_hora)`
+- `eventos (id, nombre, fecha)`
+- `asistentes (id, evento_id, nombre, codigo, ingreso_en)`
+- `sync_pendiente (id, asistente_id, fecha_hora)`
 
 ## 🗺️ Roadmap
 
 - [ ] 1. Estructura base y navegación
-- [ ] 2. Socios, planes y membresías
-- [ ] 3. Escaneo QR y asistencias
-- [ ] 4. Recordatorios y WhatsApp
-- [ ] 5. Respaldo/exportación local
+- [ ] 2. Importación de asistentes
+- [ ] 3. Escaneo y validación
+- [ ] 4. Sincronización con SystemInscripciones
+- [ ] 5. Exportación y reportes
 
 ## 📂 Estructura
 
 ```text
-SocioFit/
+AccesoQR/
 ├── app/            # Pantallas y rutas (Expo Router)
 ├── src/
 │   ├── db/         # Esquema y consultas SQLite
@@ -73,8 +72,8 @@ SocioFit/
 Requisitos: Node.js 20+ y la app Expo Go (o un emulador).
 
 ```bash
-git clone https://github.com/Luiss2080/SocioFit.git
-cd SocioFit
+git clone https://github.com/Luiss2080/AccesoQR.git
+cd AccesoQR
 npm install
 npx expo start
 ```
